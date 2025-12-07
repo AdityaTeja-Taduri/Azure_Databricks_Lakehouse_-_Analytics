@@ -7,7 +7,7 @@ It demonstrates production-grade data ingestion, transformation, quality improve
 
 ⭐ Project Highlights
 
-  . Complete Lakehouse architecture built from scratch.
+  - Complete Lakehouse architecture built from scratch.
 
   . Raw data ingestion from Kaggle → ADLS → Databricks.
 
