@@ -1,0 +1,349 @@
+{
+  "datasets": [
+    {
+      "name": "b9f9b584",
+      "displayName": "Daily Revenue",
+      "queryLines": [
+        "USE CATALOG dbw_p3_lakehouse;\r\n",
+        "USE SCHEMA nyc_taxi;\r\n",
+        "\r\n",
+        "SELECT * FROM v_daily_revenue;\r\n"
+      ]
+    },
+    {
+      "name": "614b9f54",
+      "displayName": "Top Zones by Revenue",
+      "queryLines": [
+        "USE CATALOG dbw_p3_lakehouse;\r\n",
+        "USE SCHEMA nyc_taxi;\r\n",
+        "\r\n",
+        "SELECT *\r\n",
+        "FROM v_top_zones_by_revenue\r\n",
+        "LIMIT 15;\r\n"
+      ]
+    },
+    {
+      "name": "578e7db2",
+      "displayName": "Weekday Performance",
+      "queryLines": [
+        "USE CATALOG dbw_p3_lakehouse;\r\n",
+        "USE SCHEMA nyc_taxi;\r\n",
+        "\r\n",
+        "SELECT *\r\n",
+        "FROM v_weekday_performance;\r\n"
+      ]
+    },
+    {
+      "name": "7ea8ea24",
+      "displayName": "Borough Revenue Trend",
+      "queryLines": [
+        "USE CATALOG dbw_p3_lakehouse;\r\n",
+        "USE SCHEMA nyc_taxi;\r\n",
+        "\r\n",
+        "SELECT *\r\n",
+        "FROM v_borough_revenue_trend;\r\n"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "name": "60e69efe",
+      "displayName": "NYC Taxi Lakehouse Analytics",
+      "layout": [
+        {
+          "widget": {
+            "name": "9cafa378",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "b9f9b584",
+                  "fields": [
+                    {
+                      "name": "monthly(pickup_date)",
+                      "expression": "DATE_TRUNC(\"MONTH\", `pickup_date`)"
+                    },
+                    {
+                      "name": "sum(total_revenue)",
+                      "expression": "SUM(`total_revenue`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "monthly(pickup_date)",
+                  "scale": {
+                    "type": "temporal"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(total_revenue)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "label": {
+                  "show": true
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 3,
+            "height": 4
+          }
+        },
+        {
+          "widget": {
+            "name": "4690d850",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "614b9f54",
+                  "fields": [
+                    {
+                      "name": "Borough",
+                      "expression": "`Borough`"
+                    },
+                    {
+                      "name": "Zone",
+                      "expression": "`Zone`"
+                    },
+                    {
+                      "name": "sum(total_revenue)",
+                      "expression": "SUM(`total_revenue`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "Zone",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(total_revenue)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "Borough",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "label": {
+                  "show": true
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 4,
+            "width": 3,
+            "height": 9
+          }
+        },
+        {
+          "widget": {
+            "name": "67f97c32",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "578e7db2",
+                  "fields": [
+                    {
+                      "name": "sum(total_revenue)",
+                      "expression": "SUM(`total_revenue`)"
+                    },
+                    {
+                      "name": "weekday",
+                      "expression": "`weekday`"
+                    },
+                    {
+                      "name": "sum(total_trips)",
+                      "expression": "SUM(`total_trips`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "weekday",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(total_trips)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "sum(total_revenue)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 9,
+            "width": 3,
+            "height": 4
+          }
+        },
+        {
+          "widget": {
+            "name": "0f879a4c",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "578e7db2",
+                  "fields": [
+                    {
+                      "name": "sum(avg_fare)",
+                      "expression": "SUM(`avg_fare`)"
+                    },
+                    {
+                      "name": "weekday",
+                      "expression": "`weekday`"
+                    },
+                    {
+                      "name": "sum(total_revenue)",
+                      "expression": "SUM(`total_revenue`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "weekday",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(total_revenue)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "sum(avg_fare)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 4,
+            "width": 3,
+            "height": 5
+          }
+        },
+        {
+          "widget": {
+            "name": "929e9fd1",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "7ea8ea24",
+                  "fields": [
+                    {
+                      "name": "Borough",
+                      "expression": "`Borough`"
+                    },
+                    {
+                      "name": "monthly(pickup_date)",
+                      "expression": "DATE_TRUNC(\"MONTH\", `pickup_date`)"
+                    },
+                    {
+                      "name": "sum(total_revenue)",
+                      "expression": "SUM(`total_revenue`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "monthly(pickup_date)",
+                  "scale": {
+                    "type": "temporal"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(total_revenue)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "Borough",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 0,
+            "width": 3,
+            "height": 4
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    },
+    "applyModeEnabled": false
+  }
+}
